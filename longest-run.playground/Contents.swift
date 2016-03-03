@@ -6,34 +6,40 @@ This excercise lends itself to TDD and we have provided a few basic tests below.
 
 import Cocoa
 
-func longestRun(whole: String) -> String {
-    if whole.characters.count == 0 {
-        return ""
+func calculateLongestRun(string: String, var longestCount: Int = 0, var longestRuns: [String] = [String]()) -> [String] {
+    if string.characters.count == 0 {
+        return longestRuns
     }
     
-    var newString = ""
-    var previousChar: Character?
+    var currentRun = ""
+    var remainingString = string
     
-    for char in whole.characters {
-        if previousChar != nil && char != previousChar {
-            newString += "."
+    for character in string.characters {
+        if character == string.characters.first {
+            remainingString.removeAtIndex(remainingString.startIndex)
+            currentRun += "\(character)"
+        } else {
+            break
+        }
+    }
+    
+    if currentRun.characters.count >= longestCount {
+        if currentRun.characters.count > longestCount {
+            longestRuns = []
         }
         
-        newString += "\(char)"
-        previousChar = char
+        longestRuns.append(currentRun)
+        longestCount = currentRun.characters.count
     }
     
-    let components = newString.characters.split { $0 == "." }.map(String.init)
-    let sortedComponents = components.sort { $0.characters.count > $1.characters.count }
-    
-    return sortedComponents.first!
+    return calculateLongestRun(remainingString, longestCount: longestCount, longestRuns: longestRuns)
 }
 
 // identity test
-assert("zzzz" == longestRun("zzzz"))
-assert("oo" == longestRun("book"))
-assert("zz" == longestRun("zzabb"))
-assert("" == longestRun(""))
-assert("aaaa" == longestRun("jjsaaaaifjsaiotjsijiijsidjaoisdoauioeuwiqiewjqiejwqhehhwqe"))
-
+assert(["zzzz"] == calculateLongestRun("zzzz"))
+assert(["oo"] == calculateLongestRun("book"))
+assert(["zz", "bb"] == calculateLongestRun("zzabb"))
+assert([] == calculateLongestRun(""))
+assert(["a"] == calculateLongestRun("a"))
+assert(["aaaa"] == calculateLongestRun("jjsaaaaifjsaiotjsijiijsidjaoisdoauioeuwiqiewjqiejwqhehhwqel"))
 
