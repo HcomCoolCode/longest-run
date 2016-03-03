@@ -7,9 +7,9 @@ This excercise lends itself to TDD and we have provided a few basic tests below.
 import Cocoa
 
 func longestRun(whole: String) -> String {
-    let sorted = whole.characters.sort()
+    let characters = whole.characters
 
-    var currentRunCharacter = sorted.first
+    var currentRunCharacter = characters.first
     var currentRun = 0
     var longestRunCharacter = currentRunCharacter
     var longestRun = 0
@@ -18,7 +18,7 @@ func longestRun(whole: String) -> String {
         return ""
     }
 
-    sorted.forEach({(let char: Character) -> () in
+    characters.forEach({(let char: Character) -> () in
         if char == currentRunCharacter! {
             currentRun += 1
         } else {
@@ -38,6 +38,6 @@ var zzzz = "zzzz"
 assert(zzzz == longestRun(zzzz), "\(zzzz) should be the longest run of chars")
 
 // book
-var book = "book"
-assert("oo" == longestRun(book), "longest run in \(book) is 'oo'")
+var book = "book🐰🐰🐰🐰aaa"
+assert("🐰🐰🐰🐰" == longestRun(book), "longest run in \(book) is 'oo'")
 
