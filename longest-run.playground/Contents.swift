@@ -7,14 +7,33 @@ This excercise lends itself to TDD and we have provided a few basic tests below.
 import Cocoa
 
 func longestRun(whole: String) -> String {
-    return whole
+    if whole.characters.count == 0 {
+        return ""
+    }
+    
+    var newString = ""
+    var previousChar: Character?
+    
+    for char in whole.characters {
+        if previousChar != nil && char != previousChar {
+            newString += "."
+        }
+        
+        newString += "\(char)"
+        previousChar = char
+    }
+    
+    let components = newString.characters.split { $0 == "." }.map(String.init)
+    let sortedComponents = components.sort { $0.characters.count > $1.characters.count }
+    
+    return sortedComponents.first!
 }
 
 // identity test
-var zzzz = "zzzz"
-assert(zzzz == longestRun(zzzz), "\(zzzz) should be the longest run of chars")
+assert("zzzz" == longestRun("zzzz"))
+assert("oo" == longestRun("book"))
+assert("zz" == longestRun("zzabb"))
+assert("" == longestRun(""))
+assert("aaaa" == longestRun("jjsaaaaifjsaiotjsijiijsidjaoisdoauioeuwiqiewjqiejwqhehhwqe"))
 
-// book
-// var book = "book"
-// assert("oo" == longestRun(book), "longest run in \(book) is 'oo'")
 
