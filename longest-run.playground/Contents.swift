@@ -18,3 +18,12 @@ assert([zzzz] == longestRun(zzzz), "\(zzzz) should be the longest run of chars")
 // var book = "book"
 // assert("oo" == longestRun(book), "longest run in \(book) is 'oo'")
 
+// two equally long longest runs test
+//var zzzzyyyy = "zzzzyyyy"
+//assert(["zzzz", "yyyy"] == longestRun(zzzzyyyy), "\(zzzzyyyy) should be the longest run of chars")
+
+// unicode test
+//var emojis = "😝😎😎😎😛"
+//assert(["😎😎😎"] == longestRun(emojis), "😎😎😎 should be the longest run of chars")
+
+
