@@ -6,13 +6,13 @@ This excercise lends itself to TDD and we have provided a few basic tests below.
 
 import Cocoa
 
-func longestRun(whole: String) -> String {
-    return whole
+func longestRun(whole: String) -> [String] {
+    return [whole]
 }
 
 // identity test
 var zzzz = "zzzz"
-assert(zzzz == longestRun(zzzz), "\(zzzz) should be the longest run of chars")
+assert([zzzz] == longestRun(zzzz), "\(zzzz) should be the longest run of chars")
 
 // book
 // var book = "book"
