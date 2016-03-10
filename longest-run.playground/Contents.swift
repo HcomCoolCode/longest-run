@@ -6,7 +6,7 @@ This excercise lends itself to TDD and we have provided a few basic tests below.
 
 import Cocoa
 
-func calculateLongestRun(string: String, var longestCount: Int = 0, var longestRuns: [String] = [String]()) -> [String] {
+func calculateLongestRun(string: String, var longestCount: Int = 0, var longestRuns: Set<String> = Set()) -> Set<String> {
     if string.characters.count == 0 {
         return longestRuns
     }
@@ -17,7 +17,7 @@ func calculateLongestRun(string: String, var longestCount: Int = 0, var longestR
     for character in string.characters {
         if character == string.characters.first {
             remainingString.removeAtIndex(remainingString.startIndex)
-            currentRun += "\(character)"
+            currentRun += String(character)
         } else {
             break
         }
@@ -28,7 +28,7 @@ func calculateLongestRun(string: String, var longestCount: Int = 0, var longestR
             longestRuns = []
         }
         
-        longestRuns.append(currentRun)
+        longestRuns.insert(currentRun)
         longestCount = currentRun.characters.count
     }
     
@@ -42,4 +42,6 @@ assert(["zz", "bb"] == calculateLongestRun("zzabb"))
 assert([] == calculateLongestRun(""))
 assert(["a"] == calculateLongestRun("a"))
 assert(["aaaa"] == calculateLongestRun("jjsaaaaifjsaiotjsijiijsidjaoisdoauioeuwiqiewjqiejwqhehhwqel"))
-
+assert(["☺️☺️☺️"] == calculateLongestRun("☺️☺️☺️aa"))
+assert(["bb", "☺️☺️", "aa"] == calculateLongestRun("☺️bbx124512909☺️☺️aa"))
+assert(["☺️☺️", "bb", "aa"] == calculateLongestRun("☺️bbx124512909☺️☺️aa"))
