@@ -75,6 +75,9 @@ func longestRun(whole: String) -> String {
 var result = longestRun("")
 assert(result == "")
 
+result = longestRun("zzzz")
+assert(result == "zzzz")
+
 result = longestRun("x")
 assert(result == "x")
 
