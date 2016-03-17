@@ -6,37 +6,44 @@ This excercise lends itself to TDD and we have provided a few basic tests below.
 
 import Cocoa
 
-func longestRun(whole: String) -> String {
-    let characters = whole.characters
-
-    var currentRunCharacter = characters.first
-    var currentRun = 0
-    var longestRunCharacter = currentRunCharacter
-    var longestRun = 0
-
-    if currentRunCharacter == nil {
-        return ""
+extension Array {
+    func tail() -> Array {
+        if count > 1 {
+            return Array(self[1...count-1])
+        } else {
+            return []
+        }
     }
 
-    characters.forEach({(let char: Character) -> () in
-        if char == currentRunCharacter! {
-            currentRun += 1
+    func head() -> Array.Element? {
+        if count > 0 {
+            return self[0]
         } else {
-            currentRunCharacter = char
-            currentRun = 1
+            return nil
         }
-        if longestRun < currentRun {
-            longestRun = currentRun
-            longestRunCharacter = currentRunCharacter
-        }
-    })
-    return String([Character](count: longestRun, repeatedValue: longestRunCharacter!))
+
+    }
 }
 
-// identity test
-var zzzz = "zzzz"
-assert(zzzz == longestRun(zzzz), "\(zzzz) should be the longest run of chars")
+func longestRun(whole: String) -> [String] {
+    func convert(characters: [Character], count: Int) -> [String] {
+        return characters.map({(character: Character) -> String in String([Character](count: count, repeatedValue: character))})
+    }
 
-// book
-var book = "book🐰🐰🐰🐰aaa"
-assert("🐰🐰🐰🐰" == longestRun(book), "longest run in \(book) is 'oo'")
+    let characters = Array(whole.characters)
+    if characters.count == 0 {
+        return [""]
+    }
+    let result = doLongest(characters.tail(), currentRunCharacter: characters.head(), currentRunCount: 1, longestRunCharacters: [characters.head()], longestRunCount: 1)
+    return convert(result.characters, count: result.count)
+}
+
+func doLongest(characters: [Character], currentRunCharacter: Character, currentRunCount: Int, longestRunCharacters: [Character], longestRunCount: Int)
+
+    -> (characters: [Character], count: Int) {
+
+}
+
+assert([""] == longestRun(""), "empty string should return an array of empty string")
+assert(["aa","bb"] == longestRun("aabb"), "should return non-empty")
+
