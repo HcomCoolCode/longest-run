@@ -40,4 +40,3 @@ assert(zzzz == longestRun(zzzz), "\(zzzz) should be the longest run of chars")
 // book
 var book = "book🐰🐰🐰🐰aaa"
 assert("🐰🐰🐰🐰" == longestRun(book), "longest run in \(book) is 'oo'")
-
