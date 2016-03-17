@@ -14,36 +14,49 @@ extension Array {
             return []
         }
     }
-
     func head() -> Array.Element? {
         if count > 0 {
             return self[0]
         } else {
             return nil
         }
-
     }
 }
 
 func longestRun(whole: String) -> [String] {
-    func convert(characters: [Character], count: Int) -> [String] {
-        return characters.map({(character: Character) -> String in String([Character](count: count, repeatedValue: character))})
-    }
-
     let characters = Array(whole.characters)
     if characters.count == 0 {
         return [""]
     }
-    let result = doLongest(characters.tail(), currentRunCharacter: characters.head(), currentRunCount: 1, longestRunCharacters: [characters.head()], longestRunCount: 1)
-    return convert(result.characters, count: result.count)
+    return doLongest(characters, currentRun: (char: characters.head()!, count: 0), accumulator: [])
 }
 
-func doLongest(characters: [Character], currentRunCharacter: Character, currentRunCount: Int, longestRunCharacters: [Character], longestRunCount: Int)
+func doLongest(characters: [Character], currentRun: (char: Character, count: Int), accumulator: [String]) -> [String] {
+    if characters.isEmpty {
+        return accumulator
+    } else {
+        let newCurrentRun: (char: Character, count: Int)
+        if currentRun.char == characters.head()! {
+            newCurrentRun = (currentRun.char, currentRun.count + 1)
+        } else {
+            newCurrentRun = (characters.head()!, 1)
+        }
+        let accumulatorElementLength = accumulator.isEmpty ? 0 : Array(accumulator[0].characters).count
+        let currentExpandedRun = String([Character](count: newCurrentRun.count, repeatedValue: newCurrentRun.char))
 
-    -> (characters: [Character], count: Int) {
-
+        let newAccumulator: [String]
+        if newCurrentRun.count < accumulatorElementLength {
+            newAccumulator = accumulator
+        } else if newCurrentRun.count == accumulatorElementLength {
+            newAccumulator = accumulator + [currentExpandedRun]
+        } else {
+            newAccumulator = [currentExpandedRun]
+        }
+        return doLongest(characters.tail(), currentRun: newCurrentRun, accumulator: newAccumulator)
+    }
 }
 
 assert([""] == longestRun(""), "empty string should return an array of empty string")
 assert(["aa","bb"] == longestRun("aabb"), "should return non-empty")
-
+assert(["aaa"] == longestRun("abbaaa"), "blah")
+assert(["aaa", "bbb"] == longestRun("abbaaabbb"), "blah")
